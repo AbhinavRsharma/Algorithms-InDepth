@@ -74,9 +74,8 @@ void print_list(struct event* head, int comp) {
 	printf("\n");
 }
 int main() {
-	int N, x;//    N : no. of comp.  
-	char c;
-        scanf("%d", &N);
+	int N, x;//    N : no. of comp.
+        	scanf("%d", &N);
 	int n_event[N];
 	struct event* head[N];
 	struct event* temp;
@@ -86,14 +85,14 @@ int main() {
 		n_event[i] = 0;
 	}
 
-	while (c != EOF) {
+	do{
 		scanf("%d ", &x);
 		n_event[x - 1]++;
 		temp = head[x - 1];
 		head[x - 1] = create_event();
 		head[x - 1]->next = temp;
-		scanf("%c", &c);
-	}
+		
+	}while(getchar() != EOF);
 
 	for (int i = 0; i < N; i++) {
 		head[i] = merge_sort(head[i], n_event[i]);
