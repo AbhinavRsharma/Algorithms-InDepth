@@ -74,8 +74,7 @@ void print_list(struct event* head, int comp) {
 	printf("\n");
 }
 int main() {
-	int N, x;//    N : no. of comp.
-        	scanf("%d", &N);
+	int N = 100000, x;//    N : no. of comp.
 	int n_event[N];
 	struct event* head[N];
 	struct event* temp;
@@ -85,12 +84,16 @@ int main() {
 		n_event[i] = 0;
 	}
 
+	N=0;
+	
 	do{
 		scanf("%d ", &x);
 		n_event[x - 1]++;
 		temp = head[x - 1];
 		head[x - 1] = create_event();
 		head[x - 1]->next = temp;
+		if(x > N)
+			N = x;
 		
 	}while(getchar() != EOF);
 
