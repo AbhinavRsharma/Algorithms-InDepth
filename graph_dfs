@@ -1,0 +1,92 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+	int data;
+	struct node* next;
+};
+
+typedef struct node node;
+
+
+node* create_node(int t){
+	node* temp = (node*)malloc(sizeof(node));
+	temp->data = t;
+	temp->next = NULL;
+	return temp;
+}
+
+void print_list(node* head){
+	while(head != NULL){
+		printf("%d ",head->data);
+		head = head->next;	
+	}
+	printf("\n");
+}
+
+void push(node** stack, int i){
+	node* t = create_node(i);
+	t->next = *stack;
+	*stack = t;
+}
+
+int pop(node** stack){
+	int temp = (*stack)->data;
+	(*stack) = (*stack)->next;
+	return temp;
+}
+
+int main(){
+	int n;			//no. of nodes
+	printf("NO. of nodes");
+	scanf("%d",&n);
+	printf("\n");
+
+	node* nbs_head[n];	//head to ls of neighbours
+	int visited[n];	
+
+	for(int i=0;i<n;i++){
+		nbs_head[i] = NULL;
+		visited[i] = 0;
+	}
+	
+	int t;
+	node* temp;
+	for(int i=0;i<n;i++)
+	{
+		printf("Enter neighbours of %d (enter -1 to exit)\n",i+1);
+		scanf("%d",&t);
+
+		while(t != -1){
+			node* temp = create_node(t);
+			temp->next = nbs_head[i];
+			nbs_head[i] = temp;
+			scanf("%d",&t);
+		} 	
+	}
+	
+	printf("\nDFS\n");
+	/*for(int i=0;i<n;i++){
+		print_list(nbs_head[i]);	
+	}*/
+
+	node* stack = NULL; 
+	node* cur = NULL;
+	push(&stack, 0);
+	visited[0]=1;
+
+	while(stack != NULL){
+		t = pop(&stack);
+		printf("%d ",t+1);
+		cur = nbs_head[t];
+		while(cur != NULL){
+			if(visited[(cur->data)-1] == 0){
+				visited[(cur->data)-1] = 1;
+				push(&stack, (cur->data)-1);
+			}
+			cur = cur->next;
+		}
+	}
+
+	return 0;	
+}
